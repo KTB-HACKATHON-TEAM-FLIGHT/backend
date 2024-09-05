@@ -2,7 +2,7 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${DB_PATH}
+    url: ${DB_PATH}
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
 
