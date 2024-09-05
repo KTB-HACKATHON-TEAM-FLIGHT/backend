@@ -3,6 +3,8 @@ name: backend CI/CD
 on:
   push:
     branches: ["develop"]
+env: 
+  BASE_RESOURCE_PATH: ./src/main/resources/application.yml
 
 jobs:
   build:
@@ -21,12 +23,17 @@ jobs:
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v3
 
-
     - name: Set environment variables
-      run: |
-        echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> $GITHUB_ENV
-        echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> $GITHUB_ENV
-        echo "DB_PATH=${{ secrets.DB_PATH }}" >> $GITHUB_ENV
+      with:
+        files: ${{ env.BASE_RESOURCE_PATH }}
+      env: 
+        spring.datasource.url: ${{ secrets.DB_PATH }}
+        spring.datasource.username: ${{ secrets.DB_USERNAME }}
+        spring.datasource.password: ${{ sercrets.DB_PASSWORD }}
+
+        ai.server.endpoint: ${{ AI_SERVER_ENDPOINT }}
+
+        server.domain: ${{ SERVER_DOMAIN }}
 
     - name: Build with Gradle
       run: ./gradlew clean build -x test
