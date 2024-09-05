@@ -14,20 +14,18 @@ public class PostService {
 
     private final WebClientSender webClientSender;
     private final PostRepository postRepository;
-    private final SessionIdValidator sessionIdValidator;
 
     @Transactional
-    public FirstResponse sendUserFirstRequest(UUID sessionId, String request) {
-        sessionIdValidator.validateSessionId(sessionId);
-
-        Post post = Post.builder()
+    public FirstResponse sendUserFirstRequest(UUID sessionId, Long postId, String request) {
+        Post post = postRepository.findByIdAndSessionId(postId, sessionId).orElseGet(() -> Post.builder()
                 .sessionId(sessionId)
                 .request(request)
-                .build();
+                .build());
+
+        post.updateRequest(request);
+        post.updateResult(webClientSender.sendFirstRequest(request).getResult());
+
         postRepository.save(post);
-
-        post.updateResult(webClientSender.sendFirstRequest(request));
-
         return FirstResponse.from(post);
     }
 }

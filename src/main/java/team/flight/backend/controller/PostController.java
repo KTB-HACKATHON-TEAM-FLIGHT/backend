@@ -21,6 +21,6 @@ public class PostController {
     @PostMapping
     public ResponseEntity<FirstResponse> sendFirstRequest(@RequestBody FirstPostRequest request) {
         return ResponseEntity.ok()
-                .body(postService.sendUserFirstRequest(UUID.fromString(request.sessionId()), request.request()));
+                .body(postService.sendUserFirstRequest(UUID.fromString(request.sessionId()), request.postId(), request.request()));
     }
 }

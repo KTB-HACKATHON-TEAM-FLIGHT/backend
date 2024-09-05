@@ -42,4 +42,8 @@ public class Post {
     public void updateResult(String result) {
         this.result = result;
     }
+
+    public void updateRequest(String request) {
+        this.request = request;
+    }
 }
