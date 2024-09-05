@@ -13,3 +13,7 @@ spring:
       hibernate:
         format_sql: true
     show-sql: true
+
+ai:
+  server:
+    endpoint: ${AI_SERVER_ENDPOINT}
