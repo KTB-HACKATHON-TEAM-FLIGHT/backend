@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import team.flight.backend.service.dto.AiSendRequest;
+import team.flight.backend.service.dto.AiSendResponse;
 
 @Component
 @RequiredArgsConstructor
@@ -11,12 +12,12 @@ public class WebClientSender {
 
     private final WebClient webClient;
 
-    //Todo ai 서버 스펙에 맞게 변경
-    public String sendFirstRequest(String request) {
+    public AiSendResponse sendFirstRequest(String request) {
         return webClient.post()
+                .uri("/api/submit")
                 .bodyValue(AiSendRequest.from(request))
                 .retrieve()
-                .bodyToMono(String.class)
+                .bodyToMono(AiSendResponse.class)
                 .block();
     }
 }
