@@ -5,11 +5,16 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import team.flight.backend.dto.FirstPostRequest;
+import team.flight.backend.dto.PostDetailResponse;
+import team.flight.backend.dto.PostsResponse;
 import team.flight.backend.service.PostService;
 import team.flight.backend.service.dto.FirstResponse;
 
@@ -26,5 +31,17 @@ public class PostController {
     public ResponseEntity<FirstResponse> sendFirstRequest(@RequestBody FirstPostRequest request) {
         return ResponseEntity.ok()
                 .body(postService.sendUserFirstRequest(UUID.fromString(request.sessionId()), request.postId(), request.request()));
+    }
+
+    @GetMapping
+    public ResponseEntity<PostsResponse> getPosts(@RequestParam("sessionId") String sessionId) {
+        return ResponseEntity.ok().body(postService.findAllPostsBy(UUID.fromString(sessionId)));
+    }
+
+    @Operation(summary = "특정 게시글 결과 조회 API")
+    @GetMapping("/{id}")
+    public ResponseEntity<PostDetailResponse> getPostDetail(@PathVariable("id") Long postId,
+                                                            @RequestParam("sessionId") String sessionId) {
+        return ResponseEntity.ok().body(postService.findPostsBy(postId, UUID.fromString(sessionId)));
     }
 }
