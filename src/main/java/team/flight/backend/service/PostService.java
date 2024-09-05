@@ -1,9 +1,12 @@
 package team.flight.backend.service;
 
+import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import team.flight.backend.dto.PostInfoResponse;
+import team.flight.backend.dto.PostsResponse;
 import team.flight.backend.entity.Post;
 import team.flight.backend.repository.PostRepository;
 import team.flight.backend.service.dto.FirstResponse;
@@ -27,5 +30,13 @@ public class PostService {
 
         postRepository.save(post);
         return FirstResponse.from(post);
+    }
+
+    @Transactional(readOnly = true)
+    public PostsResponse findAllPostsBy(UUID sessionId) {
+        List<PostInfoResponse> response = postRepository.findAllBySessionId(sessionId).stream()
+                .map(PostInfoResponse::from)
+                .toList();
+        return new PostsResponse(sessionId, response);
     }
 }
