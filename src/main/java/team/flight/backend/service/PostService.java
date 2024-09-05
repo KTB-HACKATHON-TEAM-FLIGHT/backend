@@ -14,9 +14,12 @@ public class PostService {
 
     private final WebClientSender webClientSender;
     private final PostRepository postRepository;
+    private final SessionIdValidator sessionIdValidator;
 
     @Transactional
     public FirstResponse sendUserFirstRequest(UUID sessionId, String request) {
+        sessionIdValidator.validateSessionId(sessionId);
+
         Post post = Post.builder()
                 .sessionId(sessionId)
                 .request(request)
