@@ -17,3 +17,6 @@ spring:
 ai:
   server:
     endpoint: ${AI_SERVER_ENDPOINT}
+
+server:
+  domain: ${SERVER_DOMAIN}
