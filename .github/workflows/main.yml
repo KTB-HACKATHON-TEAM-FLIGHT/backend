@@ -21,14 +21,15 @@ jobs:
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v3
 
-    - name: Build with Gradle
-      run: ./gradlew clean build -x test
 
     - name: Set environment variables
       run: |
         echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> $GITHUB_ENV
         echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> $GITHUB_ENV
         echo "DB_PATH=${{ secrets.DB_PATH }}" >> $GITHUB_ENV
+
+    - name: Build with Gradle
+      run: ./gradlew clean build -x test
 
     - name: Build and Push Docker image
       run: |
