@@ -25,6 +25,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v3
 
       - name: Set environment variables
+        uses: microsoft/variable-substitution@v1
         with:
           files: ${{ env.BASE_RESOURCE_PATH }}
         env: 
