@@ -36,7 +36,7 @@ jobs:
         docker build -t ${{ secrets.DOCKER_USERNAME }}/flight-backend .
         docker push ${{ secrets.DOCKER_USERNAME }}/flight-backend
 
-  deploy:
+  deploy:
     runs-on: ubuntu-latest
     needs: build
   
