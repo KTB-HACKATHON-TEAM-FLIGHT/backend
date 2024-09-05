@@ -16,6 +16,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
+    @PostMapping("/session")
     public ResponseEntity<SessionIdResponse> createSessionId() {
         return ResponseEntity.ok().body(SessionIdResponse.from(userService.createSessionId()));
     }
