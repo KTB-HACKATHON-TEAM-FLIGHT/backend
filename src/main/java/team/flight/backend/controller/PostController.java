@@ -55,7 +55,7 @@ public class PostController {
     }
 
     @Operation(summary = "HTML 코드를 PDF 파일로 변환하는 API")
-    @PostMapping("/pdf")
+    @PostMapping(value = "/pdf", consumes = MediaType.TEXT_HTML_VALUE)
     public ResponseEntity<InputStreamResource> generatePdf(@RequestBody String htmlContent)
             throws IOException, InterruptedException {
         // PDF 파일 생성
