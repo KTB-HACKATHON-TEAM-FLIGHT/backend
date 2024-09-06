@@ -11,6 +11,7 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -55,6 +56,7 @@ public class PostController {
     }
 
     @Operation(summary = "HTML 코드를 PDF 파일로 변환하는 API")
+    @CrossOrigin(origins = {"http://localhost:3000", "https://www.chatppt.site", "https://chatppt.site"})
     @PostMapping(value = "/pdf", consumes = MediaType.TEXT_HTML_VALUE)
     public ResponseEntity<InputStreamResource> generatePdf(@RequestBody String htmlContent)
             throws IOException, InterruptedException {
