@@ -3,6 +3,7 @@ package team.flight.backend.service;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicLong;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,8 +37,9 @@ public class PostService {
 
     @Transactional(readOnly = true)
     public PostsResponse findAllPostsBy(UUID sessionId) {
+        AtomicLong index = new AtomicLong(1);
         List<PostInfoResponse> response = postRepository.findAllBySessionId(sessionId).stream()
-                .map(PostInfoResponse::from)
+                .map(post -> PostInfoResponse.of(post, index.getAndIncrement()))
                 .toList();
         return new PostsResponse(sessionId, response);
     }
