@@ -12,6 +12,8 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedMethods("GET", "OPTIONS", "POST")
                 .allowedOrigins("http://localhost:3000", "https://www.chatppt.site")
+                .allowedHeaders("Content-Type", "Authorization", "Accept", "X-Requested-With", "Origin", "X-CSRF-Token")
+                .maxAge(3600L)
                 .allowCredentials(true);
     }
 }
