@@ -19,10 +19,10 @@ public class PdfService {
         try (OutputStream outputStream = new FileOutputStream(htmlFile)) {
             outputStream.write(htmlContent.getBytes());
         }
-
+         String wkhtmltopdfPath = "/usr/bin/wkhtmltopdf";
         // wkhtmltopdf 명령어 실행 (html 파일 -> pdf 파일로 변환)
         ProcessBuilder processBuilder = new ProcessBuilder();
-        processBuilder.command("wkhtmltopdf",
+        processBuilder.command(wkhtmltopdfPath,
                 "--page-width", "1920px",
                 "--page-height", "1080px",
                 htmlFile.getAbsolutePath(),
