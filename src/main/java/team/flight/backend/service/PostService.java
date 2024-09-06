@@ -29,7 +29,8 @@ public class PostService {
                 .build());
 
         post.updateRequest(request);
-        post.updateResult(cleanHtmlString(webClientSender.sendFirstRequest(request).getResponse()));
+        post.updateResult(cleanHtmlString(
+                webClientSender.sendFirstRequest(buildRequest(request, post.getResult())).getResponse()));
 
         postRepository.save(post);
         return FirstResponse.from(post);
@@ -63,4 +64,9 @@ public class PostService {
                 .replace("<p>```html</p>", "");
     }
 
+    public String buildRequest(String request, String beforeResult) {
+        StringBuilder sb = new StringBuilder(request);
+        return String.valueOf(sb.append("너가 이전에 했던 응답은 ")
+                .append(beforeResult));
+    }
 }
