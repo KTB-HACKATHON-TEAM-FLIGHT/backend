@@ -60,7 +60,7 @@ jobs:
             docker pull ${{ secrets.DOCKER_USERNAME }}/flight-backend
             docker stop flight-backend || true
             docker rm flight-backend || true
-            docker run -d --name flight-backend -p 80:8080 \
+            docker run -d --name flight-backend -p 8081:8080 \
               -e DB_USERNAME=${{ secrets.DB_USERNAME }} \
               -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
               -e DB_PATH=${{ secrets.DB_PATH }} \
