@@ -10,7 +10,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedMethods("GET", "OPTIONS", "POST")
+                .allowedMethods("*")
                 .allowedOrigins("http://localhost:3000", "https://www.chatppt.site")
                 .allowedHeaders("Content-Type", "Authorization", "Accept", "X-Requested-With", "Origin", "X-CSRF-Token")
                 .maxAge(3600L)
