@@ -41,6 +41,7 @@ public class PostController {
                 .body(postService.sendUserFirstRequest(UUID.fromString(request.sessionId()), request.postId(), request.request()));
     }
 
+    @Operation(summary = "사용자가 작성한 게시물 목록 조회 기능 구현")
     @GetMapping
     public ResponseEntity<PostsResponse> getPosts(@RequestParam("sessionId") String sessionId) {
         return ResponseEntity.ok().body(postService.findAllPostsBy(UUID.fromString(sessionId)));
