@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import team.flight.backend.service.dto.AiSendRequest;
-import team.flight.backend.service.dto.AiSendResponse;
 
 @Component
 @RequiredArgsConstructor
@@ -12,12 +11,12 @@ public class WebClientSender {
 
     private final WebClient webClient;
 
-    public AiSendResponse sendFirstRequest(String request) {
+    public String sendFirstRequest(String request) {
         return webClient.post()
-                .uri("/api/submit")
+                .uri("/api/ppt")
                 .bodyValue(AiSendRequest.from(request))
                 .retrieve()
-                .bodyToMono(AiSendResponse.class)
+                .bodyToMono(String.class)
                 .block();
     }
 }
