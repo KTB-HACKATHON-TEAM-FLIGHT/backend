@@ -28,7 +28,7 @@ public class PostService {
                 .build());
 
         post.updateRequest(request);
-        post.updateResult(webClientSender.sendFirstRequest(request));
+        post.updateResult(cleanHtmlString(webClientSender.sendFirstRequest(request).getResponse()));
 
         postRepository.save(post);
         return FirstResponse.from(post);
@@ -49,4 +49,16 @@ public class PostService {
 
         return new PostDetailResponse(post.getId(), post.getRequest(), post.getResult());
     }
+
+    public String cleanHtmlString(String rawHtml) {
+        // \n, \r, \t 등 불필요한 이스케이프 문자 제거
+        return rawHtml
+                .replace("\\n", "\n")  // 줄바꿈 처리
+                .replace("\\t", "\t")  // 탭 처리
+                .replace("\\\"", "\"") // 이중 인용부호 처리
+                .replace("\\/", "/")   // 슬래시 처리
+                .replace("\\\\", "\\") // 백슬래시 처리
+                .replace("<p>```html</p>", "");
+    }
+
 }

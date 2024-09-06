@@ -9,6 +9,7 @@ import reactor.core.publisher.Mono;
 import team.flight.backend.global.exception.AppException;
 import team.flight.backend.global.exception.ErrorCode;
 import team.flight.backend.service.dto.AiSendRequest;
+import team.flight.backend.service.dto.AiSendResponse;
 
 @Component
 @RequiredArgsConstructor
@@ -16,7 +17,7 @@ public class WebClientSender {
 
     private final WebClient webClient;
 
-    public String sendFirstRequest(String request) {
+    public AiSendResponse sendFirstRequest(String request) {
         return webClient.post()
                 .uri("/api/ppt")
                 .bodyValue(AiSendRequest.from(request))
@@ -25,7 +26,7 @@ public class WebClientSender {
                         response -> Mono.error(() -> new AppException(ErrorCode.WEBCLIENT_SERVER_ERROR)))
                 .onStatus(HttpStatusCode::is4xxClientError,
                         response -> Mono.error(() -> new AppException(ErrorCode.WEBCLIENT_CLIENT_ERROR)))
-                .bodyToMono(String.class)
+                .bodyToMono(AiSendResponse.class)
                 .timeout(Duration.ofSeconds(30))
                 .block();
     }

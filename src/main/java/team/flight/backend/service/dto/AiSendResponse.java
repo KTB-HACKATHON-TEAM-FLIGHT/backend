@@ -5,5 +5,5 @@ import lombok.Getter;
 @Getter
 public class AiSendResponse {
 
-    private String result;
+    private String response;
 }
