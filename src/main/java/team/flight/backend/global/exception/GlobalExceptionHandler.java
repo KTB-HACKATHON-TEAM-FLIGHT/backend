@@ -20,4 +20,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         log.error("[발생 위치: {} {}]", request.getMethod(), request.getRequestURI());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ErrorResponse.of(ErrorCode.ENTITY_NOT_FOUND, request));
     }
+
+    @ExceptionHandler(AppException.class)
+    public ResponseEntity<ErrorResponse> handleAppException(HttpServletRequest request, AppException ex) {
+        log.error("[App Exception 발생]: {}", ex.getErrorCode());
+        log.error("[발생 위치: {} {}]", request.getMethod(), request.getRequestURI());
+        return ResponseEntity.status(ex.getErrorCode().getHttpStatus()).body(ErrorResponse.of(ex.getErrorCode(), request));
+    }
 }
