@@ -11,7 +11,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedMethods("*")
-                .allowedOrigins("http://localhost:3000", "https://www.chatppt.site", "https://api.chatppt.site")
+                .allowedOrigins("http://localhost:3000", "https://www.chatppt.site", "https://api.chatppt.site", "https://chatppt.site")
                 .allowedHeaders("Content-Type", "Authorization", "Accept", "X-Requested-With", "Origin", "X-CSRF-Token")
                 .maxAge(3600L)
                 .allowCredentials(true);
