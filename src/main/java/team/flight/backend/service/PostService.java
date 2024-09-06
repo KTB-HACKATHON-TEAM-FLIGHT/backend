@@ -28,7 +28,7 @@ public class PostService {
                 .build());
 
         post.updateRequest(request);
-        post.updateResult(webClientSender.sendFirstRequest(request).getResult());
+        post.updateResult(webClientSender.sendFirstRequest(request));
 
         postRepository.save(post);
         return FirstResponse.from(post);
