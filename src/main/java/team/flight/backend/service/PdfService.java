@@ -5,10 +5,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import team.flight.backend.global.exception.AppException;
 import team.flight.backend.global.exception.ErrorCode;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class PdfService {
@@ -36,6 +38,7 @@ public class PdfService {
         if (exitCode == 0) {
             return new File(outputPdfPath);
         } else {
+            log.warn("Exit Code: {}", exitCode);
             throw new AppException(ErrorCode.PDF_CONVERT_EXCEPTION);
         }
     }
