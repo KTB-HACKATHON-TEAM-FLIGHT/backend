@@ -67,6 +67,7 @@ public class PostService {
     public String buildRequest(String request, String beforeResult) {
         StringBuilder sb = new StringBuilder(request);
         return String.valueOf(sb.append("너가 이전에 했던 응답은 ")
-                .append(beforeResult));
+                .append(beforeResult)
+                .append("와 같으니 참고해서 작업해줘"));
     }
 }
